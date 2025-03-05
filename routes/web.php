@@ -7,11 +7,17 @@ use App\Http\Controllers\UsuarioController;
 // Route::get('/', function () {
 //     return view('auth.login');
 // });
+Route::get('/welcome', function () {
+    return view('welcome');
+})->name('welcome');
 
-
-Route::get('/', [LoginController::class, 'MandarLogin'])->name('IniciaSesion');
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/Usuario', [UsuarioController::class, 'index'])->name('Usuario');
+
+
 
 Route::middleware([
     'auth:sanctum',
