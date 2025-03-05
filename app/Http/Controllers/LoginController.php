@@ -5,66 +5,51 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function showLoginForm()
     {
-        //
-    }
-
-    public function MandarLogin(){
-        Auth::logout();
         return view('auth.login');
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    
+    public function login(Request $request)
     {
-        //
-    }
+        $credentials = $request->only('correo', 'contrasena');
+        $usuario = DB::table('usuario')
+            ->where('correo', $credentials['correo'])
+            ->first();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if (!$usuario) {
+            return back()->withErrors([
+                'correo' => 'No se pudo acceder. Intente de nuevo.',
+            ])->withInput();
+        }
+        if ($usuario->intentos >= 5) {
+            return back()->withErrors([
+                'bloqueado' => 'Usuario bloqueado. Contacte al administrador.',
+            ])->withInput();
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        if (md5($credentials['contrasena']) === $usuario->contrasena) {
+            DB::table('usuario')
+                ->where('id_usuario', $usuario->id_usuario)
+                ->update(['intentos' => 0]);
+            Auth::loginUsingId($usuario->id_usuario);
+            return redirect()->intended('welcome');
+        }
+        $nuevoIntentos = $usuario->intentos + 1;
+        DB::table('usuario')
+            ->where('id_usuario', $usuario->id_usuario)
+            ->update(['intentos' => $nuevoIntentos]);
+        return back()->withErrors([
+            'correo' => 'No se pudo acceder. Intente de nuevo.',
+        ])->withInput();
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function logout()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        Auth::logout();
+        return redirect('/login');
     }
 }
