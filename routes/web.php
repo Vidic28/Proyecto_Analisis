@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EnviarCorreo;
 use App\Http\Controllers\RecuperacionController;
 
-
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -25,7 +22,7 @@ Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/Usuario', [UsuarioController::class, 'index'])->name('Usuario');
+//Route::get('/Usuario', [UsuarioController::class, 'index'])->name('Usuario');
 
 
 
@@ -47,3 +44,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+//Route::get('/', [UsuarioController::class, 'showRegistrationForm'])->name('Usuario');
+//Route::post('/', [UsuarioController::class, 'Usuario']);
