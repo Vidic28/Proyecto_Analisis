@@ -37,6 +37,7 @@ Route::post('Metodo-de-Recuperación', function (Request $request) {
     $correo = $request->input('email');
 
     // Verificar si el correo existe en la base de datos
+    $usuario = DB::table('usuario')->where('estado', '=','A')->first();
     $usuario = DB::table('usuario')->where('correo', $correo)->first();
 
     if (!$usuario) {
