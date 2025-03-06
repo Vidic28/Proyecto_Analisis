@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
 
 class UsuarioController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -15,10 +17,9 @@ class UsuarioController extends Controller
         return view('Usuario.index');
     }
 
-
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('Usuario.index');
     }
 
     public function register(Request $request)
@@ -58,7 +59,6 @@ class UsuarioController extends Controller
             'dias' => $dias,
         ]);
 
-        return redirect()->route('register')->with('success', 'Usuario registrado exitosamente');
-
+        return redirect()->route('Usuario')->with('success', 'Usuario registrado exitosamente');
     }
 }
