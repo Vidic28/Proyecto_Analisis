@@ -22,17 +22,21 @@ class EnviarCorreo extends Mailable
         /**
          * Create a new message instance.
          */
-    public function __construct($password,$email)
+    public function __construct($password,$email,$usuario)
     {
         $this->password = $password;
         $this->email = $email;
+        $this->usuario = $usuario;
+
     }
     public function build()
     {
         return $this->view('emails.recuperacion')
                     ->with([
                         'password' => $this->password,
-                        'email' => $this->email
+                        'email' => $this->email,
+                        'usuario' => $this->usuario->nombre_usuario 
+
                     ]);
     }
 
