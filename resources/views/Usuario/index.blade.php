@@ -16,38 +16,38 @@
 
         <form action="{{ route('Usuario') }}" method="POST">
             @csrf
-            <label for="id_usuario">ID Usuario:</label>
-            <input type="text" id="id_usuario" name="id_usuario" value="{{ old('id_usuario') }}" required>
-            @error('id_usuario')
+            <label for="codigo">Codigo Usuario:</label>
+            <input type="text" id="codigo" name="codigo" required>
+            @error('codigo')
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <label for="nombre_usuario">Nombre:</label>
-            <input type="text" id="nombre_usuario" name="nombre_usuario" value="{{ old('nombre_usuario') }}" required>
-            @error('nombre_usuario')
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            @error('nombre')
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <label for="correo">Correo Electrónico:</label>
-            <input type="email" id="correo" name="correo" value="{{ old('correo') }}" required>
-            @error('correo')
+            <label for="correo_u">Correo Electrónico:</label>
+            <input type="email" id="correo_u" name="correo_u" required>
+            @error('correo_u')
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <label for="contrasena">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" required>
-            @error('contrasena')
+            <label for="contra">Contraseña:</label>
+            <input type="password" id="contra" name="contra" required>
+            @error('contra')
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" name="telefono" value="{{ old('telefono') }}" required>
-            @error('telefono')
+            <label for="numero">Teléfono:</label>
+            <input type="number" id="numero" name="numero" required>
+            @error('numero')
                 <span class="error">{{ $message }}</span>
             @enderror
 
             <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" value="{{ old('estado') }}" required>
+            <input type="text" id="estado" name="estado" required>
             @error('estado')
                 <span class="error">{{ $message }}</span>
             @enderror
