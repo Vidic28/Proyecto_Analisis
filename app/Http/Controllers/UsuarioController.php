@@ -32,49 +32,44 @@ class UsuarioController extends Controller
             'correo_u' => 'required|string|email|max:100',
             'numero' => 'required|string|max:16'
         ]);
-    
-        $respuesta_pregunta = null;
-        $id_nivel = 2;
-        $id_pregunta = null;
+
+        $respuesta = NULL;
         $estado = 'A';
-        $intentos = 0;
-        $temporal = 1;
+        $nivel = 2;
+        $pregunta = NULL;
+        $intentos = NULL;
+        $temporal = '1';
         $dias = 30;
     
-        $contraseñaEncriptada = Str::random(10);
-
-        $idUsuario = DB::table('usuario')->insertGetId([
-            'codigo_usuario' => $request->codigo,
-            'nombre_usuario' => $request->nombre,
-            'correo' => $request->correo_u,
-            'contrasena' => $contraseñaEncriptada, // Guardar la contraseña encriptada
-            'telefono' => $request->numero,
-            'respuesta_pregunta' => $respuesta_pregunta,
-            'estado' => $estado,
-            'id_nivel' => $id_nivel,
-            'id_pregunta' => $id_pregunta,
-            'intentos' => $intentos,
-            'temporal' => $temporal,
-            'dias' => $dias,
-        ]);
-
-        // Ejecutar el procedimiento almacenado para registrar en bitácora
+        // Generar una contraseña temporal aleatoria
+        $contraseñaTemporal = Str::random(10);
+    
+        // Ejecutar el procedimiento almacenado para registrar el usuario con contraseña encriptada
         DB::statement("EXEC sp_RegistrarUsuarioConContrasenaEncriptada 
             @codigo = ?, 
             @nombre = ?, 
             @correo_u = ?, 
             @numero = ?, 
-            @contrasenaTemporal = ?, 
-            @id_usuario = ?", 
-            [$request->codigo, $request->nombre, $request->correo_u, $request->numero, $contraseñaGenerada, $idUsuario]
+            @contrasenaTemporal = ?,
+            @respuesta = ?, 
+            @estado = ?, 
+            @id_nivel = ?, 
+            @id_pregunta = ?, 
+            @intentos = ?, 
+            @temporal = ?, 
+            @dias = ? ", 
+            [$request->codigo, $request->nombre, $request->correo_u, $request->numero, $contraseñaTemporal, $respuesta,  $estado, $nivel,  $pregunta, $intentos, $temporal, $dias]
         );
-
+        
         // Enviar correo al usuario con la contraseña generada
-        $usuario = $request->nombre;
-        Mail::to($request->correo_u)->send(new EnviarCorreo($contraseñaGenerada, $request->correo_u, $usuario));
+        $usuario = DB::table('usuario')->where('correo', $request->correo_u)->first();
 
-        //DB::statement("EXEC sp_RegistrarUsuarioConContrasenaEncriptada '$contraseñaEncriptada'");
-
+        if (!$usuario) {
+            return redirect()->route('Usuario')->with('error', 'No se encontró el usuario.');
+        }
+        
+        // Ahora, $usuario es un objeto válido
+        Mail::to($request->correo_u)->send(new EnviarCorreo($contraseñaTemporal, $request->correo_u, $usuario));
 
         return redirect()->route('Usuario')->with('success', 'Usuario registrado exitosamente');
     }
