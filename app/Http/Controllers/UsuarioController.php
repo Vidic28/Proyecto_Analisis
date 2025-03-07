@@ -33,6 +33,12 @@ class UsuarioController extends Controller
             'numero' => 'required|string|max:16'
         ]);
 
+        $usuarioExistente = DB::table('usuario')->where('correo', $request->correo_u)->first();
+
+        if ($usuarioExistente) {
+            return redirect()->route('Usuario')->with('error', 'El correo ya está registrado.');
+        }
+
         $respuesta = NULL;
         $estado = 'A';
         $nivel = 2;
