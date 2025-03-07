@@ -35,7 +35,7 @@
             @enderror
 
             <label for="contra">Contraseña:</label>
-            <input type="password" id="contra" name="contra" required>
+            <input type="password" id="contra" name="contra" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y símbolos." required>
             @error('contra')
                 <span class="error">{{ $message }}</span>
             @enderror
