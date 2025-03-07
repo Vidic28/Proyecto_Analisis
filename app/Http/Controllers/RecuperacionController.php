@@ -33,9 +33,9 @@ class RecuperacionController extends Controller
         DB::table('usuario')
             ->where('correo', $correo)
             ->update([
-                'contrasena' => md5($nuevaContrasena),
-                'temporal' => '1'
+                'temporal' => '1',
             ]);
+        DB::statement("EXEC sp_EncriptarContrasena '$correo', '$nuevaContrasena'");
 
         // Enviar el correo con la nueva contraseña
         Mail::to($correo)->send(new EnviarCorreo($nuevaContrasena, $correo,$usuario));
