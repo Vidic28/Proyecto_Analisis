@@ -17,7 +17,7 @@
 
         <x-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('Metodo-de-Recuperación') }}">
+        <form method="POST" action="{{ route('Metodo-de-Recuperacion') }}">
             @csrf
 
             <div class="block">
