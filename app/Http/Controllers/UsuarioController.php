@@ -25,24 +25,13 @@ class UsuarioController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'codigo_usuario' => 'required|integer|unique:usuario,id_usuario',
-            'nombre_usuario' => 'required|string|max:100',
-            'correo' => 'required|string|email|max:100|unique:usuario,correo',
-            'telefono' => 'required|string|max:16',
+            'codigo' => 'required|string',
+            'nombre' => 'required|string|max:100',
+            'correo_u' => 'required|string|email|max:100',
+            'numero' => 'required|string|max:16',
             'estado' => 'required|string|max:1',
-            'contrasena' => [
-                'required', 
-                'confirmed', 
-                Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised()
-            ],
         ]);
     
-        $id_usuario = 'default_code';
         $respuesta_pregunta = null;
         $id_nivel = 2;
         $id_pregunta = null;
@@ -55,7 +44,7 @@ class UsuarioController extends Controller
             'codigo_usuario' => $request->codigo,
             'nombre_usuario' => $request->nombre,
             'correo' => $request->correo_u,
-            'contrasena' => Hash::make($request->contrasena),
+            'contrasena' => md5($request->contrasena),
             'telefono' => $request->numero,
             'respuesta_pregunta' => $respuesta_pregunta,
             'estado' => $request->estado,

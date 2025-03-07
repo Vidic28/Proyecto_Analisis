@@ -27,8 +27,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-Route::get('/usuario', [UsuarioController::class, 'showRegistrationForm'])->name('Usuario');
-Route::post('/usuario', [UsuarioController::class, 'register'])->name('Usuario');
+// Route::get('/usuario', [UsuarioController::class, 'showRegistrationForm'])->name('Usuario');
+// Route::post('/usuario', [UsuarioController::class, 'register'])->name('Usuario');
 
 
 //Route::get('/Usuario', [UsuarioController::class, 'index'])->name('Usuario');
@@ -55,4 +55,5 @@ Route::middleware([
 });
 
 Route::get('/index', [UsuarioController::class, 'showRegistrationForm'])->name('Usuario');
-Route::post('/index', [UsuarioController::class, 'Usuario']);
+Route::post('/index', [UsuarioController::class, 'register']);
+
