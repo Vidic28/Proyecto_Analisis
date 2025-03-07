@@ -1,24 +1,18 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
-
 class LoginController extends Controller
 {
     public function showLoginForm()
     {
         return view('auth.login');
     }
-    
     public function login(Request $request)
     {
-
         $credentials = $request->only('correo', 'contrasena');
 
         // Llamar al procedimiento almacenado
@@ -34,6 +28,11 @@ class LoginController extends Controller
         // Verificar si el usuario está inactivo
         if ($usuario->estado === 'I') {
             return back()->withErrors(['inactivo' => 'El usuario está inactivo'])->withInput();
+        }
+
+        // Verificar si el usuario está bloqueado por intentos fallidos
+        if ($usuario->intentos >= 5) {
+            return back()->withErrors(['bloqueado' => 'Usuario bloqueado. Contacte al administrador.'])->withInput();
         }
 
         // Verificar la contraseña ingresada con la desencriptada
