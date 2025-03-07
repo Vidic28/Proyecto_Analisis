@@ -34,21 +34,9 @@
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <label for="contra">Contraseña:</label>
-            <input type="password" id="contra" name="contra" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y símbolos." required>
-            @error('contra')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
             <label for="numero">Teléfono:</label>
             <input type="number" id="numero" name="numero" required>
             @error('numero')
-                <span class="error">{{ $message }}</span>
-            @enderror
-
-            <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" required>
-            @error('estado')
                 <span class="error">{{ $message }}</span>
             @enderror
 
