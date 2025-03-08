@@ -43,8 +43,13 @@
             @error('numero')
                 <span class="error">{{ $message }}</span>
             @enderror
-
+            
             <button type="submit">REGISTRAR</button>
+            <button class="btn btn-primary" onclick="window.location.href='{{ route('welcome') }}'">
+                REGRESAR
+            </button>
+        
+            
         </form>
     </div>
 </body>
