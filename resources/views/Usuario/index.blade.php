@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Usuario</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
@@ -18,31 +20,31 @@
 
         <form action="{{ route('Usuario') }}" method="POST">
             @csrf
-            <label for="codigo">Codigo Usuario:</label>
+            <label for="codigo">Codigo Usuario</label>
             <input type="text" id="codigo" name="codigo" required>
             @error('codigo')
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <label for="nombre">Nombre:</label>
+            <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" required>
             @error('nombre')
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <label for="correo_u">Correo Electrónico:</label>
+            <label for="correo_u">Correo Electrónico</label>
             <input type="email" id="correo_u" name="correo_u" required>
             @error('correo_u')
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <label for="numero">Teléfono:</label>
+            <label for="numero">Teléfono</label>
             <input type="number" id="numero" name="numero" required>
             @error('numero')
                 <span class="error">{{ $message }}</span>
             @enderror
 
-            <button type="submit">Registrar</button>
+            <button type="submit">REGISTRAR</button>
         </form>
     </div>
 </body>
