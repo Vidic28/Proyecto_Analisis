@@ -34,9 +34,7 @@ class LoginController extends Controller
         if ($usuario->intentos >= 5) {
             return back()->withErrors(['bloqueado' => 'Usuario bloqueado. Contacte al administrador.'])->withInput();
         }
-        if ($usuario->temporal == '1') {
-            return redirect()->route('register',$usuario->id_usuario);
-        }
+      
 
         // Verificar la contraseña ingresada con la desencriptada
         if ($credentials['contrasena'] === $usuario->contrasena_desencriptada) {
@@ -44,6 +42,10 @@ class LoginController extends Controller
             DB::table('usuario')
                 ->where('id_usuario', $usuario->id_usuario)
                 ->update(['intentos' => 0]);
+
+                if ($usuario->temporal == '1') {
+                    return redirect()->route('register',$usuario->id_usuario);
+                }
 
                 $respuesta=DB::select("EXEC VerificarCambioContrasena '$usuario->id_usuario'");
 
@@ -62,7 +64,7 @@ class LoginController extends Controller
             ->where('id_usuario', $usuario->id_usuario)
             ->update(['intentos' => $usuario->intentos + 1]);
 
-        return back()->withErrors(['contrasena' => 'Contraseña incorrecta'])->withInput();
+        return back()->withErrors(['contrasena' => 'Credenciales incorrectas'])->withInput();
     }
     public function logout()
     {
