@@ -75,7 +75,7 @@ class UsuarioController extends Controller
         }
         
         // Ahora, $usuario es un objeto válido
-        Mail::to($request->correo_u)->send(new EnviarCorreo($contraseñaTemporal, $request->correo_u, $usuario));
+        Mail::to($request->correo_u)->send(new ContrasenaTemp($contraseñaTemporal, $request->correo_u, $usuario));
 
         return redirect()->route('Usuario')->with('success', 'Usuario registrado exitosamente');
     }
