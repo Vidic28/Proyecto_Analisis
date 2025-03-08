@@ -18,6 +18,9 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::post('Reset-Password', [LoginController::class, 'resetPassword'])->name('reset');
+Route::get('/register/{id}', [LoginController::class, 'registerForm'])->name('register');
+
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

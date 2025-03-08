@@ -34,6 +34,9 @@ class LoginController extends Controller
         if ($usuario->intentos >= 5) {
             return back()->withErrors(['bloqueado' => 'Usuario bloqueado. Contacte al administrador.'])->withInput();
         }
+        if ($usuario->temporal == '1') {
+            return redirect()->route('register',$usuario->id_usuario);
+        }
 
         // Verificar la contraseña ingresada con la desencriptada
         if ($credentials['contrasena'] === $usuario->contrasena_desencriptada) {
@@ -58,5 +61,28 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect('/login');
+    }
+    public function registerForm($id)
+    {
+        return view('auth.register',['id'=>$id]); 
+    }
+
+    // Manejar la solicitud de restablecimiento de contraseña
+    public function resetPassword(Request $request)
+    {
+        if($request->password==$request->password_confirmation){
+            $respuesta=DB::select("EXEC sp_CambiarContrasena '$request->id', '$request->password'");
+
+
+            if($respuesta[0]->mensaje=='La nueva contraseña no puede ser similar a una contraseña anterior.'){
+
+                return back()->withErrors(['contrasena' => $respuesta[0]->mensaje])->withInput();
+            }   
+            return redirect()->route('login')->with('info', 'Contraseña restablecida correctamente. Por favor, inicia sesión.');
+        }
+        else {
+            return back()->withErrors(['contrasena' => 'La contraseña no coincide'])->withInput();
+        }
+    
     }
 }
