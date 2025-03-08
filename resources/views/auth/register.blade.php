@@ -8,16 +8,32 @@
 
         <form method="POST" action="{{ route('reset') }}">
             @csrf
-            <x-input id="id" name="id" value="{{$id}}" hidden/>
-
+            <x-input id="id" name="id" value="{{ $id }}" hidden />
+        
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Nueva Contraseña') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                <x-input id="password" 
+                    class="block mt-1 w-full" 
+                    type="password" 
+                    name="password" 
+                    required 
+                    autocomplete="new-password" 
+                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$"
+                    title="La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un símbolo. Mínimo 8 caracteres."
+                />
             </div>
+        
             <div class="mt-4">
                 <x-label for="password_confirmation" value="{{ __('Confirme su Contraseña') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-input id="password_confirmation" 
+                    class="block mt-1 w-full" 
+                    type="password" 
+                    name="password_confirmation" 
+                    required 
+                    autocomplete="new-password" 
+                />
             </div>
+        
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-label for="terms">
@@ -27,12 +43,13 @@
                     </x-label>
                 </div>
             @endif
-
+        
             <div class="flex items-center justify-center mt-4">
                 <x-button class="ms-4">
                     {{ __('Actualizar Contraseña') }}
                 </x-button>
             </div>
         </form>
+        
     </x-authentication-card>
 </x-guest-layout>
