@@ -48,8 +48,6 @@
             <button class="btn btn-primary" onclick="window.location.href='{{ route('welcome') }}'">
                 REGRESAR
             </button>
-        
-            
         </form>
     </div>
 </body>

@@ -45,9 +45,16 @@ class LoginController extends Controller
                 ->where('id_usuario', $usuario->id_usuario)
                 ->update(['intentos' => 0]);
 
-            // Iniciar sesión
-            Auth::loginUsingId($usuario->id_usuario);
-            return redirect()->intended('welcome');
+                $respuesta=DB::select("EXEC VerificarCambioContrasena '$usuario->id_usuario'");
+
+                if ($respuesta[0]->cambio=='1') {
+                    return redirect()->route('register',$usuario->id_usuario);
+                }
+                else{
+                    Auth::loginUsingId($usuario->id_usuario);
+                    return redirect()->intended('welcome');
+                }
+            
         }
 
         // Incrementar intentos fallidos
