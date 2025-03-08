@@ -29,7 +29,7 @@ class RecuperacionController extends Controller
         // Generar una nueva contraseña aleatoria
         $nuevaContrasena = Str::random(10);
 
-        // Actualizar la contraseña en la base de datos con MD5 y marcarla como temporal
+        // Actualizar la contraseña en la base de datos y marcarla como temporal
         DB::table('usuario')
             ->where('correo', $correo)
             ->update([

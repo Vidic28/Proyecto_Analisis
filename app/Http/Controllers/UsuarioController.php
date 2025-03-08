@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Mail\EnviarCorreo;
+use App\Mail\ContrasenaTemp;
+
 
 class UsuarioController extends Controller
 {
@@ -73,9 +75,9 @@ class UsuarioController extends Controller
         if (!$usuario) {
             return redirect()->route('Usuario')->with('error', 'No se encontró el usuario.');
         }
-        
+        $correo_u = $request->input('correo_u');
         // Ahora, $usuario es un objeto válido
-        Mail::to($request->correo_u)->send(new ContrasenaTemp($contraseñaTemporal, $request->correo_u, $usuario));
+        Mail::to($correo_u)->send(new ContrasenaTemp($contraseñaTemporal, $correo_u, $usuario));
 
         return redirect()->route('Usuario')->with('success', 'Usuario registrado exitosamente');
     }

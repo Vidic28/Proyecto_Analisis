@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
-class EnviarCorreo extends Mailable
+class ContrasenaTemp extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -56,7 +56,7 @@ class EnviarCorreo extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.Enviar-correo',
+            view: 'mails.ContrasenaTemp',
         );
     }
 
