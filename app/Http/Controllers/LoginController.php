@@ -11,6 +11,10 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+    public function index()
+    {
+        return view('admin');
+    }
     public function login(Request $request)
     {
         $credentials = $request->only('correo', 'contrasena');
@@ -54,7 +58,7 @@ class LoginController extends Controller
                 }
                 else{
                     Auth::loginUsingId($usuario->id_usuario);
-                    return redirect()->intended('welcome');
+                    return redirect()->intended('/admin');
                 }
             
         }

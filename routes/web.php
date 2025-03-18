@@ -47,16 +47,17 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('Metodo-de-Recuperacion', [RecuperacionController::class, 'recuperarContrasena'])->name('Metodo-de-Recuperacion');
 
 
-Route::middleware([
+/*Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified',
+    'verified',             
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
-});
+    })->name('dashboard');s
+});*/
 
 Route::get('/index', [UsuarioController::class, 'showRegistrationForm'])->name('Usuario');
 Route::post('/index', [UsuarioController::class, 'register']);
 
+Route::get('/admin', [LoginController::class, 'index'])->name('admin')->middleware('auth');
